@@ -1,0 +1,33 @@
+version: '3.4'
+services:
+  hogwarts-backend:
+    build:
+      context: .
+      dockerfile: Dockerfile-dev
+    environment:
+      MONGO_LOGIN: admin
+      MONGO_PASSWORD: phKx3UnU6svK8U9C
+      MONGO_DATABASE: tech_support
+      MONGO_CONNECTION_STRING: mongodb://admin:phKx3UnU6svK8U9C@hogwarts_db:27019/hogwarts?authMechanism=DEFAULT&retryWrites=true&w=majority
+    volumes:
+      - ./:/app
+      - /app/node_modules
+    ports:
+      - "8006:8000"
+    command: ["npm", "run", "start:dev"]
+  hogdb:
+    image: mongo:4.4.6
+    container_name: hogwarts_db
+    restart: always
+    command: [--auth]
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=admin
+      - MONGO_INITDB_ROOT_PASSWORD=phKx3UnU6svK8U9C
+      - MONGO_INITDB_DATABASE=hogwarts
+    ports:
+      - 27019:27017
+    volumes:
+      - ./mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
+      - hogwarts_db:/data/db 
+volumes:
+  hogwarts_db:
