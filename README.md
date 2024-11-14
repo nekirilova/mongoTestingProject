@@ -12,12 +12,16 @@
 ## Запуск проекта
 
 Сначала переименовать файл .env.example в .env!
+Перейти в директорию hogwarts, выполнить команды:
 ```
 docker-compose build
 docker-compose up
 ```
+Когда бэкенд запустится, можно запустить автотесты на 21 джаве. Предварительно настроить конфигурацию через Edit Configurations -> JUnit. 
+В Environmet variables прописать ENVIRONMENT=local.
 
-Сервис доступен по адресу http://localhost:8006
+Бэкенд доступен по адресу http://localhost:8006
+
 
 ### Эндпоинты:
 
